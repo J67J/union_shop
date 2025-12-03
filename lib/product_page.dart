@@ -40,6 +40,51 @@ class _ProductPageState extends State<ProductPage> {
     final product = widget.product;
 
     return Scaffold(
+      drawer: Drawer(
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(color: Color(0xFF4d2963)),
+                child: const Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_outline),
+                title: const Text('Account'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.collections_outlined),
+                title: const Text('Collections'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/gallery');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('About Us'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/about');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.local_offer_outlined),
+                title: const Text('Sale!'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/gallery');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -98,12 +143,13 @@ class _ProductPageState extends State<ProductPage> {
                                     showSearch(context: context, delegate: ProductSearchDelegate(products));
                                   },
                                 ),
+                                // open drawer/menu
                                 IconButton(
                                   icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                    Scaffold.of(context).openDrawer();
                                   },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
@@ -139,12 +185,7 @@ class _ProductPageState extends State<ProductPage> {
                                     );
                                   },
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
+                                // removed extra menu icon - drawer opens via the person/menu button
                               ],
                             ),
                           ),

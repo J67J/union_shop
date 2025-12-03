@@ -5,7 +5,6 @@ import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
-import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
@@ -53,6 +52,43 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(color: Color(0xFF4d2963)),
+                child: const Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
+              ),
+              ListTile(
+                leading: const Icon(Icons.collections_outlined),
+                title: const Text('Collections'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/gallery');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('About Us'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/about');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.local_offer_outlined),
+                title: const Text('Sale!'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/gallery');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -111,28 +147,14 @@ class HomeScreen extends StatelessWidget {
                                     showSearch(context: context, delegate: ProductSearchDelegate(products));
                                   },
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.collections_outlined, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/gallery');
-                                  },
-                                ),
+                                // Keep search and basket visible; other actions moved to drawer
                                 IconButton(
                                   icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.info_outline, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/about');
+                                    // open drawer
+                                    Scaffold.of(context).openDrawer();
                                   },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
@@ -168,12 +190,7 @@ class HomeScreen extends StatelessWidget {
                                     );
                                   },
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
+                                // removed extra menu icon - drawer is opened via the person/menu button
                               ],
                             ),
                           ),
