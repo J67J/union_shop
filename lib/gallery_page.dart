@@ -27,6 +27,18 @@ class GalleryPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Top banner (site-wide sale)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              color: const Color(0xFF4d2963),
+              child: const Text(
+                'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF!',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+            const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: GridView.count(
