@@ -21,7 +21,7 @@ class Footer extends StatelessWidget {
           onTap: onTap,
         );
 
-    final openingHours = Column(
+    const openingHours = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         Text('Opening hours', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),

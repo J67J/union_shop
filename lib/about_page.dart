@@ -16,11 +16,11 @@ class AboutUsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: CircleAvatar(
                 radius: 48,
-                backgroundColor: const Color(0xFF4d2963),
-                child: const Text(
+                backgroundColor: Color(0xFF4d2963),
+                child: Text(
                   'UP',
                   style: TextStyle(
                     color: Colors.white,
@@ -70,7 +70,7 @@ class AboutUsPage extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 24),
-            Footer(),
+            const Footer(),
           ],
         ),
       ),
