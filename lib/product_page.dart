@@ -16,6 +16,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   static const List<String> sizes = ['XS', 'S', 'M', 'L', 'XL'];
   late String selectedSize;
+  int quantity = 1;
 
   @override
   void initState() {
@@ -243,6 +244,48 @@ class _ProductPageState extends State<ProductPage> {
 
                   const SizedBox(height: 12),
                   Text('Selected size: $selectedSize', style: const TextStyle(color: Colors.grey)),
+
+                  const SizedBox(height: 12),
+                  // Quantity selector
+                  Row(
+                    children: [
+                      const Text('Quantity', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      const SizedBox(width: 12),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove, size: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              onPressed: () {
+                                setState(() {
+                                  if (quantity > 1) quantity--;
+                                });
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text('$quantity', style: const TextStyle(fontSize: 16)),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.add, size: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              onPressed: () {
+                                setState(() {
+                                  if (quantity < 99) quantity++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
