@@ -332,10 +332,13 @@ class _ProductPageState extends State<ProductPage> {
                         final item = CartItem(product: prod, size: selectedSize, quantity: quantity);
                         Cart.instance.addItem(item);
 
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        final messenger = ScaffoldMessenger.of(context);
+                        messenger.hideCurrentSnackBar();
+                        messenger.showSnackBar(
                           SnackBar(
                             content: const Text('Added to basket'),
                             duration: const Duration(seconds: 5),
+                            behavior: SnackBarBehavior.floating,
                             action: SnackBarAction(
                               label: 'View Basket',
                               onPressed: () {
