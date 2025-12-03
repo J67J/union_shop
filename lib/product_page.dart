@@ -107,7 +107,9 @@ class _ProductPageState extends State<ProductPage> {
                                   icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.menu, size: 18, color: Colors.grey),

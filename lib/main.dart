@@ -5,6 +5,8 @@ import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
+import 'package:union_shop/models/cart.dart';
+import 'package:union_shop/basket_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -130,11 +132,43 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.pushNamed(context, '/about');
                                   },
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
+                                ValueListenableBuilder<List<CartItem>>(
+                                  valueListenable: Cart.instance.items,
+                                  builder: (context, items, _) {
+                                    final count = items.length;
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
+                                            padding: const EdgeInsets.all(8),
+                                            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                            onPressed: () {
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
+                                            },
+                                          ),
+                                          if (count > 0)
+                                            Positioned(
+                                              right: 0,
+                                              top: -4,
+                                              child: Container(
+                                                padding: const EdgeInsets.all(2),
+                                                decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1)),
+                                                constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+                                                child: Center(
+                                                  child: Text(
+                                                    count > 99 ? '99+' : '$count',
+                                                    style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
