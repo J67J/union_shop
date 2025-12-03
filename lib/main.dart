@@ -5,6 +5,7 @@ import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
+import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
@@ -122,7 +123,9 @@ class HomeScreen extends StatelessWidget {
                                   icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.info_outline, size: 18, color: Colors.grey),

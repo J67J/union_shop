@@ -4,6 +4,7 @@ import 'package:union_shop/models/product.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
+import 'package:union_shop/auth_page.dart';
 
 class ProductPage extends StatefulWidget {
   final Product? product;
@@ -101,7 +102,9 @@ class _ProductPageState extends State<ProductPage> {
                                   icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                  },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
                                   valueListenable: Cart.instance.items,
