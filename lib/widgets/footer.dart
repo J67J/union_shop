@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/search/product_search.dart';
+import 'package:union_shop/models/product.dart';
 
 class Footer extends StatelessWidget {
   final VoidCallback? onSearch;
@@ -59,7 +61,9 @@ class Footer extends StatelessWidget {
         sectionTitle('Search'),
         const SizedBox(height: 6),
         ElevatedButton.icon(
-          onPressed: onSearch ?? () {},
+          onPressed: onSearch ?? () {
+            showSearch(context: context, delegate: ProductSearchDelegate(products));
+          },
           icon: const Icon(Icons.search),
           label: const Text('Search products'),
           style: ElevatedButton.styleFrom(
