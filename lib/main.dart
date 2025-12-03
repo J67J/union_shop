@@ -278,22 +278,22 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 48,
                       children: const [
                         ProductCard(
-                          title: 'Placeholder Product 1',
+                          title: 'Grey hoodie',
                           price: '£10.00',
                           imageUrl: 'assets/images/product_1.png',
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 2',
+                          title: 'Tshirt',
                           price: '£15.00',
                           imageUrl: 'assets/images/product_2.png',
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 3',
+                          title: 'Croptop',
                           price: '£20.00',
                           imageUrl: 'assets/images/product_3.png',
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 4',
+                          title: 'Grey Joggers',
                           price: '£25.00',
                           imageUrl: 'assets/images/product_4.png',
                         ),
