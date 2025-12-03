@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
+import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/widgets/footer.dart';
 
 void main() {
@@ -26,6 +27,7 @@ class UnionShopApp extends StatelessWidget {
       routes: {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
+        '/gallery': (context) => const GalleryPage(),
       },
     );
   }
@@ -114,6 +116,21 @@ class HomeScreen extends StatelessWidget {
                                     minHeight: 32,
                                   ),
                                   onPressed: placeholderCallbackForButtons,
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.collections_outlined,
+                                    size: 18,
+                                    color: Colors.grey,
+                                  ),
+                                  padding: const EdgeInsets.all(8),
+                                  constraints: const BoxConstraints(
+                                    minWidth: 32,
+                                    minHeight: 32,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/gallery');
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(
