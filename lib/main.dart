@@ -6,6 +6,7 @@ import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/static_navbar.dart';
+import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
@@ -58,9 +59,9 @@ class HomeScreen extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(color: Color(0xFF4d2963)),
-                child: const Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
+              const DrawerHeader(
+                decoration: BoxDecoration(color: Color(0xFF4d2963)),
+                child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
               ListTile(
                 leading: const Icon(Icons.collections_outlined),
@@ -90,27 +91,12 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWide = constraints.maxWidth >= 800;
-          if (!isWide) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  _homeBody(context),
-                ],
-              ),
-            );
-          }
-
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const StaticNavbar(),
-              Expanded(child: SingleChildScrollView(child: Column(children: [_homeBody(context)]))),
-            ],
-          );
-        },
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const StaticNavbar(),
+          Expanded(child: SingleChildScrollView(child: Column(children: [_homeBody(context)]))),
+        ],
       ),
     );
   }
@@ -173,14 +159,46 @@ class HomeScreen extends StatelessWidget {
                                     showSearch(context: context, delegate: ProductSearchDelegate(products));
                                   },
                                 ),
-                                // Keep search and basket visible; other actions moved to drawer
-                                IconButton(
-                                  icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: () {
-                                    // open drawer
-                                    Scaffold.of(context).openDrawer();
+                                // Keep search and basket visible; other actions moved to drawer or popup on wide screens
+                                Builder(
+                                  builder: (ctx) {
+                                    final isNarrow = MediaQuery.of(ctx).size.width < 800;
+                                    if (isNarrow) {
+                                      return IconButton(
+                                        icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
+                                        padding: const EdgeInsets.all(8),
+                                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                        onPressed: () {
+                                          Scaffold.of(ctx).openDrawer();
+                                        },
+                                      );
+                                    }
+
+                                    return PopupMenuButton<int>(
+                                      icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
+                                      itemBuilder: (context) => const [
+                                        PopupMenuItem(value: 1, child: Text('Account')),
+                                        PopupMenuItem(value: 2, child: Text('Collections')),
+                                        PopupMenuItem(value: 3, child: Text('About Us')),
+                                        PopupMenuItem(value: 4, child: Text('Sale!')),
+                                      ],
+                                      onSelected: (val) {
+                                        switch (val) {
+                                          case 1:
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                            break;
+                                          case 2:
+                                            Navigator.pushNamed(context, '/gallery');
+                                            break;
+                                          case 3:
+                                            Navigator.pushNamed(context, '/about');
+                                            break;
+                                          case 4:
+                                            Navigator.pushNamed(context, '/gallery');
+                                            break;
+                                        }
+                                      },
+                                    );
                                   },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
@@ -302,9 +320,7 @@ class HomeScreen extends StatelessWidget {
             // Footer
             const Padding(padding: EdgeInsets.only(top: 16), child: Footer()),
           ],
-        ),
-      ),
-    );
+        );
   }
 }
 
