@@ -22,10 +22,7 @@ class UnionShopApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
       home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
       initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
       routes: {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
@@ -47,7 +44,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
+    // placeholder for future handlers
   }
 
   @override
@@ -80,9 +77,7 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              navigateToHome(context);
-                            },
+                            onTap: () => navigateToHome(context),
                             child: Image.network(
                               'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
                               height: 18,
@@ -93,8 +88,7 @@ class HomeScreen extends StatelessWidget {
                                   width: 18,
                                   height: 18,
                                   child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
+                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
                                   ),
                                 );
                               },
@@ -107,87 +101,45 @@ class HomeScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.search, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
                                     showSearch(context: context, delegate: ProductSearchDelegate(products));
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.collections_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.collections_outlined, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
                                     Navigator.pushNamed(context, '/gallery');
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.info_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.info_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
                                     Navigator.pushNamed(context, '/about');
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                               ],
@@ -200,9 +152,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-                ],
-              ),
-            ),
 
             // Hero Section
             SizedBox(
@@ -210,25 +159,17 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  // Background image
                   Positioned.fill(
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                          ),
+                          image: NetworkImage('https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561'),
                           fit: BoxFit.cover,
                         ),
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.7),
-                        ),
-                      ),
+                      child: Container(color: Colors.black.withOpacity(0.7)),
                     ),
                   ),
-                  // Content overlay
                   Positioned(
                     left: 24,
                     right: 24,
@@ -236,41 +177,18 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          'EDIT',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1.2,
-                          ),
-                        ),
+                        const Text('EDIT', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, height: 1.2)),
                         const SizedBox(height: 16),
                         const Text(
                           "This is placeholder text for the hero section.",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            height: 1.5,
-                          ),
+                          style: TextStyle(fontSize: 20, color: Colors.white, height: 1.5),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/gallery');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                          child: const Text(
-                            'BROWSE PRODUCTS',
-                            style: TextStyle(fontSize: 14, letterSpacing: 1),
-                          ),
+                          onPressed: () => Navigator.pushNamed(context, '/gallery'),
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963), foregroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+                          child: const Text('BROWSE PRODUCTS', style: TextStyle(fontSize: 14, letterSpacing: 1)),
                         ),
                       ],
                     ),
@@ -286,43 +204,19 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(40.0),
                 child: Column(
                   children: [
-                    const Text(
-                      'PRODUCTS SECTION',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        letterSpacing: 1,
-                      ),
-                    ),
+                    const Text('PRODUCTS SECTION', style: TextStyle(fontSize: 20, color: Colors.black, letterSpacing: 1)),
                     const SizedBox(height: 48),
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount:
-                          MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                      crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: const [
-                        ProductCard(
-                          title: 'Grey hoodie',
-                          price: '£10.00',
-                          imageUrl: 'assets/images/product_1.png',
-                        ),
-                        ProductCard(
-                          title: 'Tshirt',
-                          price: '£15.00',
-                          imageUrl: 'assets/images/product_2.png',
-                        ),
-                        ProductCard(
-                          title: 'Croptop',
-                          price: '£20.00',
-                          imageUrl: 'assets/images/product_3.png',
-                        ),
-                        ProductCard(
-                          title: 'Grey Joggers',
-                          price: '£25.00',
-                          imageUrl: 'assets/images/product_4.png',
-                        ),
+                        ProductCard(title: 'Grey hoodie', price: '£10.00', imageUrl: 'assets/images/product_1.png'),
+                        ProductCard(title: 'T-shirt', price: '£15.00', imageUrl: 'assets/images/product_2.png'),
+                        ProductCard(title: 'Crop top', price: '£20.00', imageUrl: 'assets/images/product_3.png'),
+                        ProductCard(title: 'Grey joggers', price: '£25.00', imageUrl: 'assets/images/product_4.png'),
                       ],
                     ),
                   ],
@@ -331,10 +225,7 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Footer
-            const Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Footer(),
-            ),
+            const Padding(padding: EdgeInsets.only(top: 16), child: Footer()),
           ],
         ),
       ),
@@ -411,3 +302,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
