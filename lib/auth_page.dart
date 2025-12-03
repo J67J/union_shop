@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/services/user_store.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -15,14 +16,14 @@ class AuthPage extends StatelessWidget {
             tabs: [Tab(text: 'Login'), Tab(text: 'Register')],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: _AuthForm(mode: _AuthMode.login),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: _AuthForm(mode: _AuthMode.register),
             ),
           ],
@@ -46,22 +47,49 @@ class _AuthFormState extends State<_AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailCtl = TextEditingController();
   final _passCtl = TextEditingController();
+  final _nameCtl = TextEditingController();
 
   @override
   void dispose() {
     _emailCtl.dispose();
     _passCtl.dispose();
+    _nameCtl.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
+    _doAuth();
+  }
 
-    final mode = widget.mode == _AuthMode.login ? 'Login' : 'Register';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('44D $mode successful (stub)')),
-    );
-    // In a real app, call auth API and handle navigation.
+  Future<void> _doAuth() async {
+    final email = _emailCtl.text.trim();
+    final pass = _passCtl.text;
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.showSnackBar(const SnackBar(content: Text('Processing...')));
+
+    if (widget.mode == _AuthMode.register) {
+      final displayName = _nameCtl.text.trim();
+      final ok = await UserStore.instance.register(email, pass, displayName);
+      if (!mounted) return;
+      messenger.hideCurrentSnackBar();
+      if (ok) {
+        messenger.showSnackBar(const SnackBar(content: Text('Registration successful')));
+        Navigator.of(context).pop();
+      } else {
+        messenger.showSnackBar(const SnackBar(content: Text('Email already registered')));
+      }
+    } else {
+      final ok = await UserStore.instance.authenticate(email, pass);
+      if (!mounted) return;
+      messenger.hideCurrentSnackBar();
+      if (ok) {
+        messenger.showSnackBar(const SnackBar(content: Text('Login successful')));
+        Navigator.of(context).pop();
+      } else {
+        messenger.showSnackBar(const SnackBar(content: Text('Invalid credentials')));
+      }
+    }
   }
 
   @override
@@ -87,6 +115,7 @@ class _AuthFormState extends State<_AuthForm> {
           if (isRegister) ...[
             const SizedBox(height: 12),
             TextFormField(
+              controller: _nameCtl,
               decoration: const InputDecoration(labelText: 'Display name'),
               validator: (v) => (v == null || v.isEmpty) ? 'Enter a name' : null,
             ),
