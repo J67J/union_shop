@@ -103,12 +103,37 @@ class _ProductPageState extends State<ProductPage> {
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                  onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
+                                ValueListenableBuilder<List<CartItem>>(
+                                  valueListenable: Cart.instance.items,
+                                  builder: (context, items, _) {
+                                    final count = items.length;
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
+                                            padding: const EdgeInsets.all(8),
+                                            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                            onPressed: () {
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
+                                            },
+                                          ),
+                                          if (count > 0) ...[
+                                            const SizedBox(width: 4),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(12)),
+                                              child: Text(
+                                                count > 99 ? '99+' : '$count',
+                                                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        ],
+                                      ),
+                                    );
                                   },
                                 ),
                                 IconButton(
