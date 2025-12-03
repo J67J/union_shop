@@ -234,6 +234,29 @@ class HomeScreen extends StatelessWidget {
                                     );
                                   },
                                 ),
+                                const SizedBox(width: 8),
+                                // Small static menu button next to the bag icon that opens a dropdown
+                                PopupMenuButton<int>(
+                                  icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
+                                  itemBuilder: (context) => const [
+                                    PopupMenuItem(value: 1, child: Text('Collections')),
+                                    PopupMenuItem(value: 2, child: Text('About Us')),
+                                    PopupMenuItem(value: 3, child: Text('Sale!')),
+                                  ],
+                                  onSelected: (val) {
+                                    switch (val) {
+                                      case 1:
+                                        Navigator.pushNamed(context, '/gallery');
+                                        break;
+                                      case 2:
+                                        Navigator.pushNamed(context, '/about');
+                                        break;
+                                      case 3:
+                                        Navigator.pushNamed(context, '/gallery');
+                                        break;
+                                    }
+                                  },
+                                ),
                                 // removed extra menu icon - drawer is opened via the person/menu button
                               ],
                             ),
