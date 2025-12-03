@@ -3,21 +3,38 @@ import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/search/product_search.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   final Product? product;
+  final String? initialSize;
 
-  const ProductPage({super.key, this.product});
+  const ProductPage({super.key, this.product, this.initialSize});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  static const List<String> sizes = ['XS', 'S', 'M', 'L', 'XL'];
+  late String selectedSize;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSize = widget.initialSize ?? 'M';
+  }
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
   void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
+    // placeholder for future handlers
   }
 
   @override
   Widget build(BuildContext context) {
+    final product = widget.product;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -46,9 +63,7 @@ class ProductPage extends StatelessWidget {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              navigateToHome(context);
-                            },
+                            onTap: () => navigateToHome(context),
                             child: Image.network(
                               'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
                               height: 18,
@@ -59,8 +74,7 @@ class ProductPage extends StatelessWidget {
                                   width: 18,
                                   height: 18,
                                   child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
+                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
                                   ),
                                 );
                               },
@@ -73,57 +87,29 @@ class ProductPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.search, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
                                     showSearch(context: context, delegate: ProductSearchDelegate(products));
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                                 IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
+                                  icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
                                   padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: placeholderCallbackForButtons,
                                 ),
                               ],
@@ -152,12 +138,12 @@ class ProductPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.grey[200],
                     ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          product?.image ?? 'assets/images/product_1.png',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        product?.image ?? 'assets/images/product_1.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: Colors.grey[300],
                             child: const Center(
@@ -186,9 +172,9 @@ class ProductPage extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Product name
-                  const Text(
-                    'Placeholder Product Name',
-                    style: TextStyle(
+                  Text(
+                    product?.title ?? 'Placeholder Product Name',
+                    style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -198,9 +184,9 @@ class ProductPage extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   // Product price
-                  const Text(
-                    '£15.00',
-                    style: TextStyle(
+                  Text(
+                    product?.price ?? '£15.00',
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF4d2963),
@@ -227,6 +213,36 @@ class ProductPage extends StatelessWidget {
                       height: 1.5,
                     ),
                   ),
+
+                  const SizedBox(height: 20),
+
+                  // Size selector
+                  const Text(
+                    'Select size',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: sizes.map((s) {
+                      final isSelected = selectedSize == s;
+                      return ChoiceChip(
+                        label: Text(s),
+                        selected: isSelected,
+                        onSelected: (_) {
+                          setState(() {
+                            selectedSize = s;
+                          });
+                        },
+                        selectedColor: const Color(0xFF4d2963),
+                        backgroundColor: Colors.grey[200],
+                        labelStyle: TextStyle(color: isSelected ? Colors.white : Colors.black),
+                      );
+                    }).toList(),
+                  ),
+
+                  const SizedBox(height: 12),
+                  Text('Selected size: $selectedSize', style: const TextStyle(color: Colors.grey)),
                 ],
               ),
             ),
