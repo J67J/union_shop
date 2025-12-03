@@ -7,8 +7,8 @@ class Product {
 }
 
 const List<Product> products = [
-  Product(title: 'Placeholder Product 1', price: '£10.00', image: 'assets/images/product_1.png'),
-  Product(title: 'Placeholder Product 2', price: '£15.00', image: 'assets/images/product_2.png'),
-  Product(title: 'Placeholder Product 3', price: '£20.00', image: 'assets/images/product_3.png'),
-  Product(title: 'Placeholder Product 4', price: '£25.00', image: 'assets/images/product_4.png'),
+  Product(title: 'Grey hoodie', price: '£10.00', image: 'assets/images/product_1.png'),
+  Product(title: 'T-shirt', price: '£15.00', image: 'assets/images/product_2.png'),
+  Product(title: 'Crop top', price: '£20.00', image: 'assets/images/product_3.png'),
+  Product(title: 'Grey joggers', price: '£25.00', image: 'assets/images/product_4.png'),
 ];

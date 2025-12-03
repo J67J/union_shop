@@ -200,6 +200,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+                ],
+              ),
+            ),
 
             // Hero Section
             SizedBox(
