@@ -146,12 +146,12 @@ class ProductPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.grey[200],
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/images/product_1.png',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: Colors.grey[300],
                             child: const Center(
@@ -226,8 +226,8 @@ class ProductPage extends StatelessWidget {
             ),
 
             // Footer
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
               child: Footer(),
             ),
           ],

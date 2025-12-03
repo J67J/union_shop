@@ -280,22 +280,22 @@ class HomeScreen extends StatelessWidget {
                         ProductCard(
                           title: 'Placeholder Product 1',
                           price: '£10.00',
-                          imageUrl: 'assets/images/Product 1.png',
+                          imageUrl: 'assets/images/product_1.png',
                         ),
                         ProductCard(
                           title: 'Placeholder Product 2',
                           price: '£15.00',
-                          imageUrl: 'assets/images/Product 2.png',
+                          imageUrl: 'assets/images/product_2.png',
                         ),
                         ProductCard(
                           title: 'Placeholder Product 3',
                           price: '£20.00',
-                          imageUrl: 'assets/images/Product 3.png',
+                          imageUrl: 'assets/images/product_3.png',
                         ),
                         ProductCard(
                           title: 'Placeholder Product 4',
                           price: '£25.00',
-                          imageUrl: 'assets/images/Product 4.png',
+                          imageUrl: 'assets/images/product_4.png',
                         ),
                       ],
                     ),
