@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/search/product_search.dart';
+import 'package:union_shop/models/cart.dart';
+import 'package:union_shop/basket_page.dart';
 
 class ProductPage extends StatefulWidget {
   final Product? product;
@@ -285,6 +287,38 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Add to Basket button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () {
+                        final prod = product ??
+                            const Product(title: 'Unknown', price: '£0.00', image: 'assets/images/product_1.png');
+
+                        final item = CartItem(product: prod, size: selectedSize, quantity: quantity);
+                        Cart.instance.addItem(item);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Added to basket'),
+                            action: SnackBarAction(
+                              label: 'View Basket',
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text('Add to Basket', style: TextStyle(fontSize: 16)),
+                    ),
                   ),
                 ],
               ),
