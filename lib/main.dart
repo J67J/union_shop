@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/gallery_page.dart';
+import 'package:union_shop/search/product_search.dart';
+import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
 
 void main() {
@@ -115,7 +117,9 @@ class HomeScreen extends StatelessWidget {
                                     minWidth: 32,
                                     minHeight: 32,
                                   ),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    showSearch(context: context, delegate: ProductSearchDelegate(products));
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/footer.dart';
+import 'package:union_shop/models/product.dart';
+import 'package:union_shop/search/product_search.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key});
+  final Product? product;
+
+  const ProductPage({super.key, this.product});
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -79,7 +83,9 @@ class ProductPage extends StatelessWidget {
                                     minWidth: 32,
                                     minHeight: 32,
                                   ),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    showSearch(context: context, delegate: ProductSearchDelegate(products));
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(
@@ -149,7 +155,7 @@ class ProductPage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          'assets/images/product_1.png',
+                          product?.image ?? 'assets/images/product_1.png',
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                           return Container(
