@@ -5,6 +5,7 @@ import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
+import 'package:union_shop/widgets/static_navbar.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
@@ -89,9 +90,34 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = constraints.maxWidth >= 800;
+          if (!isWide) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  _homeBody(context),
+                ],
+              ),
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const StaticNavbar(),
+              Expanded(child: SingleChildScrollView(child: Column(children: [_homeBody(context)]))),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _homeBody(BuildContext context) {
+    return Column(
+      children: [
             // Header
             Container(
               height: 100,
