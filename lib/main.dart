@@ -137,9 +137,9 @@ class HomeScreen extends StatelessWidget {
                                   builder: (context, items, _) {
                                     final count = items.length;
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
+                                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           IconButton(
                                             icon: const Icon(Icons.shopping_bag_outlined, size: 18, color: Colors.grey),
@@ -149,22 +149,17 @@ class HomeScreen extends StatelessWidget {
                                               Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BasketPage()));
                                             },
                                           ),
-                                          if (count > 0)
-                                            Positioned(
-                                              right: 0,
-                                              top: -4,
-                                              child: Container(
-                                                padding: const EdgeInsets.all(2),
-                                                decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1)),
-                                                constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
-                                                child: Center(
-                                                  child: Text(
-                                                    count > 99 ? '99+' : '$count',
-                                                    style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-                                                  ),
-                                                ),
+                                          if (count > 0) ...[
+                                            const SizedBox(width: 4),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(12)),
+                                              child: Text(
+                                                count > 99 ? '99+' : '$count',
+                                                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                                               ),
                                             ),
+                                          ],
                                         ],
                                       ),
                                     );

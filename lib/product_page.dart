@@ -310,6 +310,7 @@ class _ProductPageState extends State<ProductPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: const Text('Added to basket'),
+                            duration: const Duration(seconds: 5),
                             action: SnackBarAction(
                               label: 'View Basket',
                               onPressed: () {
