@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/footer.dart';
-import 'package:union_shop/widgets/static_navbar.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/cart.dart';
@@ -106,12 +105,7 @@ class _ProductPageState extends State<ProductPage> {
                                 padding: const EdgeInsets.all(8),
                                 constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                 onPressed: () {
-                                  final isNarrow = MediaQuery.of(context).size.width < 800;
-                                  if (isNarrow) {
-                                    Scaffold.of(context).openDrawer();
-                                  } else {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
-                                  }
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
                                 },
                               ),
                               ValueListenableBuilder<List<CartItem>>(
@@ -369,67 +363,8 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isWide = constraints.maxWidth >= 800;
-        return Scaffold(
-          drawer: isWide
-              ? null
-              : Drawer(
-                  child: SafeArea(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-                        DrawerHeader(
-                          decoration: const BoxDecoration(color: Color(0xFF4d2963)),
-                          child: const Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.person_outline),
-                          title: const Text('Account'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.collections_outlined),
-                          title: const Text('Collections'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushNamed(context, '/gallery');
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.info_outline),
-                          title: const Text('About Us'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushNamed(context, '/about');
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.local_offer_outlined),
-                          title: const Text('Sale!'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushNamed(context, '/gallery');
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-          body: isWide
-              ? Row(
-                  children: [
-                    const StaticNavbar(),
-                    Expanded(child: content),
-                  ],
-                )
-              : content,
-        );
-      },
+    return Scaffold(
+      body: content,
     );
   }
 }

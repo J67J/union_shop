@@ -111,43 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(color: Color(0xFF4d2963)),
-                child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 20)),
-              ),
-              ListTile(
-                leading: const Icon(Icons.collections_outlined),
-                title: const Text('Collections'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/gallery');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('About Us'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/about');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.local_offer_outlined),
-                title: const Text('Sale!'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/gallery');
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

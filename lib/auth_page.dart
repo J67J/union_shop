@@ -112,6 +112,14 @@ class _AuthFormState extends State<_AuthForm> {
             obscureText: true,
             validator: (v) => (v == null || v.length < 6) ? 'Password too short' : null,
           ),
+          if (isRegister)
+            const Padding(
+              padding: EdgeInsets.only(top: 6.0),
+              child: Text(
+                'Password needs a minimum of 6 characters',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
           if (isRegister) ...[
             const SizedBox(height: 12),
             TextFormField(

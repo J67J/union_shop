@@ -74,9 +74,10 @@ class Footer extends StatelessWidget {
       color: Colors.grey[100],
       padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
       child: isWide
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ? Wrap(
+              spacing: 24,
+              runSpacing: 12,
+              alignment: WrapAlignment.spaceBetween,
               children: [
                 SizedBox(width: 220, child: openingHours),
                 SizedBox(width: 260, child: helpInfo),
