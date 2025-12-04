@@ -359,14 +359,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text('welcome to The Union website', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, height: 1.2)),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "This is placeholder text for the hero section.",
-                          style: TextStyle(fontSize: 20, color: Colors.white, height: 1.5),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
+                        const Text('WELCOME TO THE UNION WEBSITE', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, height: 1.2)),
+                        const SizedBox(height: 24),
                         ElevatedButton(
                           onPressed: () => Navigator.pushNamed(context, '/gallery'),
                           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963), foregroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),

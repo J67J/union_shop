@@ -54,9 +54,16 @@ class ProductSearchDelegate extends SearchDelegate<Product?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = query.isEmpty
-        ? items
-        : items.where((p) => p.title.toLowerCase().contains(query.toLowerCase())).toList();
+    if (query.isEmpty) {
+      // Don't show suggestions until the user starts typing.
+      return const Center(
+        child: Text('Start typing to search products'),
+      );
+    }
+
+    final suggestions = items
+        .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
 
     return ListView.builder(
       itemCount: suggestions.length,
