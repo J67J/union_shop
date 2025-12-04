@@ -40,18 +40,13 @@ class Footer extends StatelessWidget {
         sectionTitle('Help & Information'),
         const SizedBox(height: 6),
         linkTile(Icons.info_outline, 'About Us', onTap: () => Navigator.pushNamed(context, '/about')),
-        linkTile(Icons.email_outlined, 'Contact Us', onTap: () {}),
-        linkTile(Icons.help_outline, 'FAQs', onTap: () {}),
       ],
     );
 
     final policies = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        sectionTitle('Policies'),
-        const SizedBox(height: 6),
         linkTile(Icons.policy_outlined, 'Terms & Conditions of Sale', onTap: () {}),
-        linkTile(Icons.lock_outline, 'Privacy Policy', onTap: () {}),
       ],
     );
 

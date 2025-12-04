@@ -174,32 +174,6 @@ class _AccountPageState extends State<AccountPage> {
                       ),
 
                       const SizedBox(height: 24),
-                      const Divider(),
-                      const SizedBox(height: 12),
-                      const Text('Sign in with (placeholders):'),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.black),
-                            icon: Image.network('https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg', width: 18, height: 18),
-                            label: const Text('Google'),
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Google sign-in not configured')));
-                            },
-                          ),
-                          const SizedBox(width: 12),
-                          ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent, foregroundColor: Colors.white),
-                            icon: const Icon(Icons.facebook, size: 18),
-                            label: const Text('Facebook'),
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Facebook sign-in not configured')));
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
                         onPressed: () {
