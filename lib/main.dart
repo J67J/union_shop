@@ -181,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                                 ValueListenableBuilder<List<CartItem>>(
                                   valueListenable: Cart.instance.items,
                                   builder: (context, items, _) {
-                                    final count = items.length;
+                                    final count = items.fold<int>(0, (s, it) => s + it.quantity);
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
                                       child: Row(
@@ -340,7 +340,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductPage(product: Product(title: title, price: price, image: imageUrl))));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

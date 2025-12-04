@@ -117,7 +117,7 @@ class _ProductPageState extends State<ProductPage> {
                               ValueListenableBuilder<List<CartItem>>(
                                 valueListenable: Cart.instance.items,
                                 builder: (context, items, _) {
-                                  final count = items.length;
+                                  final count = items.fold<int>(0, (s, it) => s + it.quantity);
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                                     child: Row(
