@@ -90,7 +90,7 @@ class _BasketPageState extends State<BasketPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Total: £${Cart.instance.total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text('Total: £${items.fold<double>(0.0, (s, it) => s + it.product.unitPrice * it.quantity).toStringAsFixed(2)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 12),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
@@ -116,7 +116,7 @@ class _BasketPageState extends State<BasketPage> {
                         final orderItems = currentItems
                             .map((it) => OrderItem(title: it.product.title, size: it.size, quantity: it.quantity, unitPrice: it.product.unitPrice))
                             .toList();
-                        final total = Cart.instance.total;
+                        final total = currentItems.fold<double>(0.0, (s, it) => s + it.product.unitPrice * it.quantity);
                         final order = Order(id: id, createdAt: created, items: orderItems, total: total);
 
                         await OrdersStore.addOrderFor(email, order);
