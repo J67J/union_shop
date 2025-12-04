@@ -103,10 +103,19 @@ class _BasketPageState extends State<BasketPage> {
                           return;
                         }
 
-                        // Build order
+                        // Snapshot the current cart items at checkout time
+                        final currentItems = List.of(Cart.instance.items.value);
+                        if (currentItems.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Your basket is empty')));
+                          return;
+                        }
+
+                        // Build order from live cart snapshot
                         final created = DateTime.now();
                         final id = created.millisecondsSinceEpoch.toString();
-                        final orderItems = items.map((it) => OrderItem(title: it.product.title, size: it.size, quantity: it.quantity, unitPrice: it.product.unitPrice)).toList();
+                        final orderItems = currentItems
+                            .map((it) => OrderItem(title: it.product.title, size: it.size, quantity: it.quantity, unitPrice: it.product.unitPrice))
+                            .toList();
                         final total = Cart.instance.total;
                         final order = Order(id: id, createdAt: created, items: orderItems, total: total);
 
