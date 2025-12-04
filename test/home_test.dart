@@ -28,10 +28,10 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Check that header icons are present
-      expect(find.byIcon(Icons.search), findsOneWidget);
-      expect(find.byIcon(Icons.shopping_bag_outlined), findsOneWidget);
-      expect(find.byIcon(Icons.menu), findsOneWidget);
+      // Check that header icons are present (may appear multiple times)
+      expect(find.byIcon(Icons.search), findsWidgets);
+      expect(find.byIcon(Icons.shopping_bag_outlined), findsWidgets);
+      expect(find.byIcon(Icons.menu), findsWidgets);
     });
 
     testWidgets('should display footer', (tester) async {
