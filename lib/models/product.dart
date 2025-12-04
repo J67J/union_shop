@@ -4,6 +4,12 @@ class Product {
   final String image;
 
   const Product({required this.title, required this.price, required this.image});
+
+  double get unitPrice {
+    // price stored like '£10.00' — strip non-numeric and parse
+    final cleaned = price.replaceAll(RegExp(r'[^0-9\.]'), '');
+    return double.tryParse(cleaned) ?? 0.0;
+  }
 }
 
 const List<Product> products = [
