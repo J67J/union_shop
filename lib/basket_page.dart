@@ -114,6 +114,8 @@ class _BasketPageState extends State<BasketPage> {
                         Cart.instance.clear();
 
                         // show confirmation dialog
+                        if (!mounted) return;
+                        // ignore: use_build_context_synchronously
                         await showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
@@ -125,6 +127,8 @@ class _BasketPageState extends State<BasketPage> {
                           ),
                         );
 
+                        if (!mounted) return;
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context).pushNamed('/');
                       },
                       child: const Padding(

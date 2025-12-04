@@ -11,7 +11,11 @@ import 'package:union_shop/services/user_store.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
-void main() {
+// Widgets and cart already imported above
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Cart.instance.load();
   runApp(const UnionShopApp());
 }
 

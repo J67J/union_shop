@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/services/user_store.dart';
 import 'package:union_shop/auth_page.dart';
+import 'package:union_shop/models/orders.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -130,7 +131,7 @@ class _AccountPageState extends State<AccountPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Not signed in', style: TextStyle(fontSize: 18)),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 24),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
                       onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage())),
@@ -174,6 +175,48 @@ class _AccountPageState extends State<AccountPage> {
                       ),
 
                       const SizedBox(height: 24),
+                      const SizedBox(height: 24),
+                      const Divider(),
+                      const SizedBox(height: 12),
+                      const Text('Order history', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      FutureBuilder<List<Order>>(
+                        future: OrdersStore.getOrdersFor(email),
+                        builder: (context, snap) {
+                          final orders = snap.data ?? [];
+                          if (orders.isEmpty) return const Text('No orders yet');
+                          return Column(
+                            children: orders.map((o) => ListTile(
+                                  title: Text('Order #${o.id}'),
+                                  subtitle: Text('${o.items.length} items • ${o.createdAt.toLocal()}'),
+                                  trailing: Text('£${o.total.toStringAsFixed(2)}'),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        title: Text('Order #${o.id}'),
+                                        content: SizedBox(
+                                          width: 300,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: o.items
+                                                .map((it) => ListTile(
+                                                      title: Text(it.title),
+                                                      subtitle: Text('Size: ${it.size} x${it.quantity}'),
+                                                      trailing: Text('£${(it.unitPrice * it.quantity).toStringAsFixed(2)}'),
+                                                    ))
+                                                .toList(),
+                                          ),
+                                        ),
+                                        actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Close'))],
+                                      ),
+                                    );
+                                  },
+                                )).toList(),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
                         onPressed: () {
