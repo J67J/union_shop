@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
@@ -45,8 +47,41 @@ class UnionShopApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController _pageController = PageController();
+  Timer? _timer;
+  int _currentPage = 0;
+
+  final List<String> _heroImages = [
+    'assets/images/product_1.png',
+    'assets/images/product_2.png',
+    'assets/images/product_3.png',
+    'assets/images/product_4.png',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (t) {
+      if (!mounted) return;
+      _currentPage = (_currentPage + 1) % _heroImages.length;
+      _pageController.animateToPage(_currentPage, duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -256,21 +291,27 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Hero Section
+            // Hero Section (slideshow)
             SizedBox(
               height: 400,
               width: double.infinity,
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage('https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(color: Colors.black.withOpacity(0.7)),
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: _heroImages.length,
+                      itemBuilder: (context, index) {
+                        final img = _heroImages[index];
+                        return Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.asset(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Container(color: Colors.grey[300])),
+                            Container(color: Colors.black.withOpacity(0.45)),
+                          ],
+                        );
+                      },
+                      onPageChanged: (i) => setState(() => _currentPage = i),
                     ),
                   ),
                   Positioned(
@@ -292,6 +333,18 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () => Navigator.pushNamed(context, '/gallery'),
                           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963), foregroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
                           child: const Text('BROWSE PRODUCTS', style: TextStyle(fontSize: 14, letterSpacing: 1)),
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(_heroImages.length, (i) {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              width: _currentPage == i ? 12 : 8,
+                              height: 8,
+                              decoration: BoxDecoration(color: _currentPage == i ? Colors.white : Colors.white54, borderRadius: BorderRadius.circular(4)),
+                            );
+                          }),
                         ),
                       ],
                     ),
