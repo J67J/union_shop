@@ -67,4 +67,48 @@ class UserStore {
   void signOut() {
     currentUser.value = null;
   }
+
+  /// Returns the display name for the given email, or null if not found.
+  Future<String?> displayNameFor(String? email) async {
+    if (email == null) return null;
+    final users = await _loadAll();
+    final rec = users[email.toLowerCase()];
+    return rec?.displayName;
+  }
+
+  /// Update the display name for the given email. Returns true if updated.
+  Future<bool> updateDisplayName(String email, String newDisplayName) async {
+    final users = await _loadAll();
+    final key = email.toLowerCase();
+    final rec = users[key];
+    if (rec == null) return false;
+    users[key] = UserRecord(email: rec.email, password: rec.password, displayName: newDisplayName);
+    await _saveAll(users);
+    return true;
+  }
+
+  /// Change password for the given email. Returns true if successful.
+  Future<bool> changePassword(String email, String oldPassword, String newPassword) async {
+    final users = await _loadAll();
+    final key = email.toLowerCase();
+    final rec = users[key];
+    if (rec == null) return false;
+    if (rec.password != oldPassword) return false;
+    users[key] = UserRecord(email: rec.email, password: newPassword, displayName: rec.displayName);
+    await _saveAll(users);
+    return true;
+  }
+
+  /// Delete the account for the given email if the password matches. Signs out after deletion.
+  Future<bool> deleteAccount(String email, String password) async {
+    final users = await _loadAll();
+    final key = email.toLowerCase();
+    final rec = users[key];
+    if (rec == null) return false;
+    if (rec.password != password) return false;
+    users.remove(key);
+    await _saveAll(users);
+    currentUser.value = null;
+    return true;
+  }
 }

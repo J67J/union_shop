@@ -6,6 +6,8 @@ import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/auth_page.dart';
+import 'package:union_shop/account_page.dart';
+import 'package:union_shop/services/user_store.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
 
@@ -164,7 +166,12 @@ class HomeScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                    final email = UserStore.instance.currentUser.value;
+                                    if (email == null) {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
+                                    } else {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountPage()));
+                                    }
                                   },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
