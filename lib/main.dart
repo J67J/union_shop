@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/gallery_page.dart';
@@ -60,11 +61,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentPage = 0;
 
   final List<String> _heroImages = [
-    'assets/images/product_1.png',
-    'assets/images/product_2.png',
-    'assets/images/product_3.png',
-    'assets/images/product_4.png',
+    'assets/images/Product_6.png',
+    'assets/images/Product_7.png',
+    'assets/images/Product_8.png',
+    'assets/images/Product_9.png',
   ];
+
+  // Using local asset images only for the hero slideshow.
 
   @override
   void initState() {
@@ -74,6 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
       _currentPage = (_currentPage + 1) % _heroImages.length;
       _pageController.animateToPage(_currentPage, duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     });
+
+    // Runtime check: attempt to load each asset and log result so we can
+    // diagnose missing/bundling issues in the console.
+    for (final path in _heroImages) {
+      rootBundle.load(path).then((_) {
+        debugPrint('Asset available at runtime: $path');
+      }).catchError((e) {
+        debugPrint('Asset NOT available at runtime: $path — $e');
+      });
+    }
   }
 
   @override
@@ -302,15 +315,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: _pageController,
                       itemCount: _heroImages.length,
                       itemBuilder: (context, index) {
-                        final img = _heroImages[index];
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Image.asset(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Container(color: Colors.grey[300])),
-                            Container(color: Colors.black.withOpacity(0.45)),
-                          ],
-                        );
-                      },
+                          final img = _heroImages[index];
+                          // For web dev server the asset may be served at '/assets/images/..'
+                          final webUrl = '/${img}';
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.network(
+                                webUrl,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) return child;
+                                  return Container(color: Colors.grey[300]);
+                                },
+                                errorBuilder: (c, e, s) {
+                                  debugPrint('Failed to load network asset URL: $webUrl — error: $e');
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(Icons.broken_image, size: 48, color: Colors.black54),
+                                          const SizedBox(height: 8),
+                                          Text(webUrl, style: const TextStyle(color: Colors.black54)),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              Container(color: Color.fromRGBO(0, 0, 0, 0.45)),
+                            ],
+                          );
+                        },
                       onPageChanged: (i) => setState(() => _currentPage = i),
                     ),
                   ),
