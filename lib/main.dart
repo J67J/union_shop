@@ -217,6 +217,8 @@ class HomeScreen extends StatelessWidget {
                                 // Small static menu button next to the bag icon that opens a dropdown
                                 PopupMenuButton<int>(
                                   icon: const Icon(Icons.menu, size: 18, color: Colors.grey),
+                                  // show the menu below the icon (small vertical offset)
+                                  offset: const Offset(0, 36),
                                   itemBuilder: (context) => const [
                                     PopupMenuItem(value: 1, child: Text('Collections')),
                                     PopupMenuItem(value: 2, child: Text('About Us')),
