@@ -159,45 +159,12 @@ class HomeScreen extends StatelessWidget {
                                   },
                                 ),
                                 // Keep search and basket visible; other actions moved to drawer or popup on wide screens
-                                Builder(
-                                  builder: (ctx) {
-                                    final isNarrow = MediaQuery.of(ctx).size.width < 800;
-                                    if (isNarrow) {
-                                      return IconButton(
-                                        icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
-                                        padding: const EdgeInsets.all(8),
-                                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                                        onPressed: () {
-                                          Scaffold.of(ctx).openDrawer();
-                                        },
-                                      );
-                                    }
-
-                                    return PopupMenuButton<int>(
-                                      icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
-                                      itemBuilder: (context) => const [
-                                        PopupMenuItem(value: 1, child: Text('Account')),
-                                        PopupMenuItem(value: 2, child: Text('Collections')),
-                                        PopupMenuItem(value: 3, child: Text('About Us')),
-                                        PopupMenuItem(value: 4, child: Text('Sale!')),
-                                      ],
-                                      onSelected: (val) {
-                                        switch (val) {
-                                          case 1:
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
-                                            break;
-                                          case 2:
-                                            Navigator.pushNamed(context, '/gallery');
-                                            break;
-                                          case 3:
-                                            Navigator.pushNamed(context, '/about');
-                                            break;
-                                          case 4:
-                                            Navigator.pushNamed(context, '/gallery');
-                                            break;
-                                        }
-                                      },
-                                    );
+                                IconButton(
+                                  icon: const Icon(Icons.person_outline, size: 18, color: Colors.grey),
+                                  padding: const EdgeInsets.all(8),
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AuthPage()));
                                   },
                                 ),
                                 ValueListenableBuilder<List<CartItem>>(
