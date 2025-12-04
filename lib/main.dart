@@ -313,12 +313,9 @@ class HomeScreen extends StatelessWidget {
                       crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
-                      children: const [
-                        ProductCard(title: 'Grey hoodie', price: '£10.00', imageUrl: 'assets/images/product_1.png'),
-                        ProductCard(title: 'T-shirt', price: '£15.00', imageUrl: 'assets/images/product_2.png'),
-                        ProductCard(title: 'Crop top', price: '£20.00', imageUrl: 'assets/images/product_3.png'),
-                        ProductCard(title: 'Grey joggers', price: '£25.00', imageUrl: 'assets/images/product_4.png'),
-                      ],
+                      children: products
+                          .map((p) => ProductCard(title: p.title, price: p.price, imageUrl: p.image))
+                          .toList(),
                     ),
                   ],
                 ),
