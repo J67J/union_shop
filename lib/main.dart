@@ -10,6 +10,7 @@ import 'package:union_shop/account_page.dart';
 import 'package:union_shop/services/user_store.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
+import 'package:union_shop/print_shack_page.dart';
 
 // Widgets and cart already imported above
 
@@ -36,6 +37,7 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
         '/gallery': (context) => const GalleryPage(),
+        '/printshack': (context) => const PrintShackPage(),
       },
     );
   }
@@ -219,6 +221,7 @@ class HomeScreen extends StatelessWidget {
                                     PopupMenuItem(value: 1, child: Text('Collections')),
                                     PopupMenuItem(value: 2, child: Text('About Us')),
                                     PopupMenuItem(value: 3, child: Text('Sale!')),
+                                    PopupMenuItem(value: 4, child: Text('The Print Shack')),
                                   ],
                                   onSelected: (val) {
                                     switch (val) {
@@ -230,6 +233,9 @@ class HomeScreen extends StatelessWidget {
                                         break;
                                       case 3:
                                         Navigator.pushNamed(context, '/gallery');
+                                        break;
+                                      case 4:
+                                        Navigator.pushNamed(context, '/printshack');
                                         break;
                                     }
                                   },
