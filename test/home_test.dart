@@ -6,39 +6,27 @@ void main() {
   group('Home Page Tests', () {
     testWidgets('should display home page with basic elements', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that basic UI elements are present
-      expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
-      expect(find.text('Placeholder Hero Title'), findsOneWidget);
-      expect(find.text('PLACEHOLDER PRODUCTS SECTION'), findsOneWidget);
+      expect(find.text('WELCOME TO THE UNION WEBSITE'), findsOneWidget);
       expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
-      expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
     });
 
     testWidgets('should display product cards', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Check that product cards are displayed
-      expect(find.text('Placeholder Product 1'), findsOneWidget);
-      expect(find.text('Placeholder Product 2'), findsOneWidget);
-      expect(find.text('Placeholder Product 3'), findsOneWidget);
-      expect(find.text('Placeholder Product 4'), findsOneWidget);
-
-      // Check prices are displayed
-      expect(find.text('£10.00'), findsOneWidget);
-      expect(find.text('£15.00'), findsOneWidget);
-      expect(find.text('£20.00'), findsOneWidget);
-      expect(find.text('£25.00'), findsOneWidget);
+      // Check that product cards are displayed (titles come from products list)
+      expect(find.text('Grey hoodie'), findsOneWidget);
+      expect(find.text('T-shirt'), findsOneWidget);
+      expect(find.text('Crop top'), findsOneWidget);
+      expect(find.text('Grey joggers'), findsOneWidget);
     });
 
     testWidgets('should display header icons', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that header icons are present
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -48,14 +36,10 @@ void main() {
 
     testWidgets('should display footer', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Check that footer is present
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      // Check that footer is present (opening hours section)
+      expect(find.text('Opening hours'), findsOneWidget);
     });
   });
 }
