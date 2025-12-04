@@ -12,11 +12,9 @@ class GalleryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width > 600;
 
-    final items = const [
-      {'title': 'Placeholder Product 1', 'price': '£10.00', 'image': 'assets/images/product_1.png'},
-      {'title': 'Placeholder Product 2', 'price': '£15.00', 'image': 'assets/images/product_2.png'},
-      {'title': 'Placeholder Product 3', 'price': '£20.00', 'image': 'assets/images/product_3.png'},
-      {'title': 'Placeholder Product 4', 'price': '£25.00', 'image': 'assets/images/product_4.png'},
+    final items = [
+      {'title': 'The Print Shack', 'subtitle': 'Order personalised items', 'image': 'assets/images/product_1.png', 'route': '/printshack'},
+      {'title': 'Sale items', 'subtitle': 'Discounted essentials', 'image': 'assets/images/product_2.png', 'route': '/sale'},
     ];
 
     return Scaffold(
@@ -41,38 +39,49 @@ class GalleryPage extends StatelessWidget {
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: GridView.count(
+                child: GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: isWide ? 4 : 2,
+                crossAxisCount: isWide ? 2 : 1,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.7,
+                childAspectRatio: 3,
                 children: items.map((it) {
                   return GestureDetector(
-                    onTap: () => openProduct(context),
+                    onTap: () {
+                      final route = it['route'];
+                      if (route is String) Navigator.pushNamed(context, route);
+                    },
                     child: Card(
                       clipBehavior: Clip.hardEdge,
                       elevation: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Expanded(
+                          SizedBox(
+                            width: 140,
                             child: Image.asset(
                               it['image']!,
                               fit: BoxFit.cover,
                               width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder: (c, e, s) => Container(
+                                color: Colors.grey[200],
+                                child: const Center(child: Icon(Icons.image_not_supported)),
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(it['title']!, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                                const SizedBox(height: 6),
-                                Text(it['price']!, style: const TextStyle(color: Colors.grey)),
-                              ],
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(it['title']!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                                  const SizedBox(height: 6),
+                                  Text(it['subtitle'] ?? '', style: const TextStyle(color: Colors.grey)),
+                                ],
+                              ),
                             ),
                           ),
                         ],
