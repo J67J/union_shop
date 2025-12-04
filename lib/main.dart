@@ -5,7 +5,6 @@ import 'package:union_shop/gallery_page.dart';
 import 'package:union_shop/search/product_search.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/widgets/footer.dart';
-import 'package:union_shop/widgets/static_navbar.dart';
 import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/models/cart.dart';
 import 'package:union_shop/basket_page.dart';
@@ -91,12 +90,12 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const StaticNavbar(),
-          Expanded(child: SingleChildScrollView(child: Column(children: [_homeBody(context)]))),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _homeBody(context),
+          ],
+        ),
       ),
     );
   }
