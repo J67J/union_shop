@@ -105,7 +105,7 @@ class _AccountPageState extends State<AccountPage> {
     if (ok) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account deleted')));
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const AuthPage()), (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
     } else {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to delete account (check password)')));
@@ -204,8 +204,8 @@ class _AccountPageState extends State<AccountPage> {
                         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
                         onPressed: () {
                           UserStore.instance.signOut();
-                          // After logout, send user to AuthPage
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const AuthPage()), (route) => false);
+                          // After logout, send user to home/main menu
+                          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                         },
                         child: const Text('Log out'),
                       ),
