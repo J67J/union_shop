@@ -234,9 +234,20 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'This is a placeholder description for the product. Students should replace this with real product information and implement proper data management.',
-                  style: TextStyle(
+                Text(
+                  // Provide product-specific placeholder descriptions for known items
+                  product == null
+                      ? 'This is a placeholder description for the product. Students should replace this with real product information and implement proper data management.'
+                      : (product.title.toLowerCase() == 'grey hoodie'
+                          ? 'Grey hoodie with University of portsmouth writing in various sizes'
+                          : (product.title.toLowerCase() == 'grey joggers'
+                              ? 'Grey jogger with University of portsmouth writing in various sizes'
+                              : (product.title.toLowerCase() == 't-shirt'
+                                  ? 'T-shirt with University of portsmouth writing in various sizes'
+                                  : (product.title.toLowerCase() == 'crop top'
+                                      ? 'Crop top with University of portsmouth writing in various sizes'
+                                      : 'This is a placeholder description for the product. Students should replace this with real product information and implement proper data management.')))),
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                     height: 1.5,
